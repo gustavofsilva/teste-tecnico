@@ -1,0 +1,55 @@
+# Dependências e saídas de build
+**/bin/
+**/obj/
+**/artifacts/
+**/node_modules/
+**/dist/
+**/.angular/
+**/.vite/
+coverage/
+.coverage
+
+# Bancos e resultados locais
+*.db
+*.db-shm
+*.db-wal
+*.db-journal
+TestResults/
+
+# Variáveis, segredos e certificados
+.env
+.env.*
+!.env.example
+**/appsettings.*.local.json
+secrets.json
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Arquivo gerado no build Angular
+frontend/src/environments/environment.generated.ts
+
+# IDEs e ferramentas de deploy
+.idea/
+.vs/
+.vscode/
+.vercel/
+.render/
+*.user
+*.suo
+
+# Logs e temporários
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# Perfis/screenshot criados durante diagnóstico local
+.chrome-test-profile*/
+.edge-test-profile/
+chrome-page.png

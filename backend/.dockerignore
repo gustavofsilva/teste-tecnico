@@ -1,0 +1,9 @@
+**/bin
+**/obj
+artifacts
+TestResults
+*.db
+*.db-shm
+*.db-wal
+*.user
+*.log

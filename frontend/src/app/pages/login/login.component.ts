@@ -1,0 +1,9 @@
+import { Component, inject } from '@angular/core'; import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms'; import { Router, RouterLink } from '@angular/router'; import { finalize } from 'rxjs'; import { ApiService } from '../../core/api.service'; import { AuthService } from '../../core/auth.service'; import { fieldError } from '../../core/form-errors';
+@Component({ standalone: true, imports: [ReactiveFormsModule, RouterLink], template: `
+<section class="card"><p class="eyebrow">Bem-vindo de volta</p><h1>Entrar</h1><p class="muted">Acesse seus dados com segurança.</p>
+<form [formGroup]="form" (ngSubmit)="submit()"><label>Email<input type="email" formControlName="email" autocomplete="email"><small>{{ error('email','Email') }}</small></label><label>Senha<input type="password" formControlName="password" autocomplete="current-password"><small>{{ error('password','Senha') }}</small></label>
+@if (message) { <div class="alert error" role="alert">{{ message }}</div> }<button type="submit" [disabled]="loading">{{ loading ? 'Entrando…' : 'Entrar' }}</button></form><p class="center muted">Ainda não possui conta? <a routerLink="/cadastro">Cadastre-se</a></p></section>` })
+export class LoginComponent { private fb=inject(FormBuilder); private api=inject(ApiService); private auth=inject(AuthService); private router=inject(Router); loading=false; message=''; error=(name:string,label:string)=>fieldError(this.form.get(name),label);
+form=this.fb.nonNullable.group({email:['',[Validators.required,Validators.email]],password:['',[Validators.required]]});
+submit():void { if(this.form.invalid){this.form.markAllAsTouched();return;} this.loading=true;this.message='';this.api.login(this.form.getRawValue()).pipe(finalize(()=>this.loading=false)).subscribe({next:r=>{this.auth.setSession(r);void this.router.navigateByUrl('/dashboard');},error:e=>this.message=e.error?.message??'Não foi possível entrar. Tente novamente.'}); }
+}

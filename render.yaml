@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: minha-conta-api
+    runtime: docker
+    plan: free
+    dockerContext: ./backend
+    dockerfilePath: ./backend/UserProfile.Api/Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:10000
+      - key: DatabaseProvider
+        value: PostgreSql
+      - key: ConnectionStrings__DefaultConnection
+        sync: false
+      - key: Jwt__Key
+        generateValue: true
+      - key: Jwt__Issuer
+        value: UserProfile.Api
+      - key: Jwt__Audience
+        value: UserProfile.Web
+      - key: FrontendUrl
+        sync: false

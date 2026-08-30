@@ -1,0 +1,31 @@
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: UserProfile.Api/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Data Source=/app/data/users.db
+      Jwt__Key: ${JWT_KEY:-local-development-key-change-before-production-2026}
+      Jwt__Issuer: UserProfile.Api
+      Jwt__Audience: UserProfile.Web
+      FrontendUrl: http://localhost:4200
+    volumes:
+      - user-data:/app/data
+    restart: unless-stopped
+  web:
+    build: ./frontend
+    ports:
+      - "${WEB_PORT:-4200}:80"
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/health"]
+      interval: 5s
+      timeout: 3s
+      retries: 12
+      start_period: 5s
+    restart: unless-stopped
+volumes:
+  user-data:
