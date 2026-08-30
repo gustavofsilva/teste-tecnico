@@ -102,14 +102,7 @@ Resposta esperada do health check:
 
 O repositório não possui usuário ou senha padrão e não cria seed de contas. No primeiro acesso, utilize a tela **Cadastre-se**.
 
-Uma conta criada localmente fica armazenada no arquivo SQLite e permanece disponível nas próximas execuções. Para a instância local usada durante o desenvolvimento foi criada esta conta de demonstração:
-
-```text
-Email: teste@teste.com
-Senha: 123456
-```
-
-Essa credencial não existe automaticamente em uma instalação nova.
+Uma conta criada localmente fica armazenada no arquivo SQLite e permanece disponível nas próximas execuções. Em uma instalação nova ou após remover o volume do Compose, nenhuma conta é criada automaticamente: utilize a tela **Cadastre-se**.
 
 ## Executar com Docker — opcional
 
